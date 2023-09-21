@@ -1,0 +1,5 @@
+package local:obfuscate
+
+world obfuscate {
+  export obfuscate: func(src: string) -> string
+}

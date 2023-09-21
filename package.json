@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@bytecodealliance/componentize-js": "^0.3.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.1",
+    "esbuild": "0.19.3",
+    "javascript-obfuscator": "^4.1.0",
+    "rollup": "^3.29.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-obfuscator": "^3.5.1"
+  }
+}
