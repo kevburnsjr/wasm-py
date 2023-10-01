@@ -1,2 +1,6 @@
 node_modules
 output/*
+obfuscate/*
+*.component.wasm
+*.bundle.js
+__pycache__

@@ -1,9 +1,15 @@
 # WASM demo: Javascript in Python 
 
-Install esbuild
+Install esbuild for nodejs
 
 ```
 npm install esbuild
+```
+
+Install wasmtime for python
+
+```
+pip install wasmtime
 ```
 
 Bundle JS w/ esbuild
