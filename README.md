@@ -1,5 +1,10 @@
 # WASM demo: Javascript in Python 
 
+Trying to compile a javascript obfuscator to a web assembly module as a component using a Wasm Interface Type (WIT),
+then run from Python.
+
+## How to Run
+
 Install esbuild, componentize-js and jco
 
 ```
