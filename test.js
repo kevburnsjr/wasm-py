@@ -7,7 +7,7 @@ try {
   var a = performance.now();
   var c = JavaScriptObfuscator.obfuscate(data).getObfuscatedCode();
   var b = performance.now();
-  console.log("Node inner:  " + (Math.round(b - a) / 1000).toFixed(3) + "s");
+  console.log("Node internal call:   " + (Math.round(b - a) / 1000).toFixed(3) + "s");
 } catch (err) {
   console.error(err);
 }

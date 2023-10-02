@@ -1,39 +1,27 @@
 # WASM demo: Javascript in Python 
 
-Install esbuild for nodejs
+Install esbuild, componentize-js and jco
 
 ```
-npm install esbuild
+npm install
 ```
 
-Install wasmtime for python
+Install wasmtime
 
 ```
 pip install wasmtime
 ```
 
-Bundle JS w/ esbuild
+Build
 
 ```
-./node_modules/.bin/esbuild obfuscate.js --bundle --outfile=obfuscate.bundle.js --platform=browser --target=es6 --format=esm
+make build
 ```
 
-Generate WASM from WIT + JS
+Run
 
 ```
-node componentize.mjs
-```
-
-Generate Python bindings from WIT
-
-```py
-python3.10 -m wasmtime.bindgen obfuscate.component.wasm --out-dir obfuscate
-```
-
-Run it!
-
-```py
-python3.10 obfuscate.py socket.js
+make run
 ```
 
 It works.
@@ -116,12 +104,57 @@ This turns out to be just as fast as using a single instance because the module 
 
 ```
 ▶ make run
-Python wasm: 0.221s
-Node inner:  0.072s
-Python node: 0.208s
+
+Running tiny sample: 2KB
+Node internal call:   0.071s
+Python node syscall:  0.228s
+Python wasm module:   0.216s
+Python wasm instance: 0.220s
+
+Running small sample: 17KB
+Node internal call:   0.272s
+Python node syscall:  0.398s
+Python wasm module:   1.372s
+Python wasm instance: 1.377s
+
+Running medium sample: 55KB
+Node internal call:   0.526s
+Python node syscall:  0.642s
+Python wasm module:   4.956s
+Python wasm instance: 4.912s
+
+Running large sample: 400KB
+Node internal call:   1.313s
+Python node syscall:  1.432s
+Traceback (most recent call last):
+  File "/mnt/f/web/junk/wasm-py/obfuscate-uni.py", line 21, in <module>
+    main()
+  File "/mnt/f/web/junk/wasm-py/obfuscate-uni.py", line 14, in main
+    out = demo.obfuscate(store, src)
+  File "/mnt/f/web/junk/wasm-py/obfuscate/__init__.py", line 26, in obfuscate
+    ret = self.lift_callee0(caller, ptr, len0)
+  File "/home/kev/.local/lib/python3.10/site-packages/wasmtime/_func.py", line 91, in __call__
+    with enter_wasm(store) as trap:
+  File "/usr/lib/python3.10/contextlib.py", line 142, in __exit__
+    next(self.gen)
+  File "/home/kev/.local/lib/python3.10/site-packages/wasmtime/_func.py", line 264, in enter_wasm
+    raise trap_obj
+wasmtime._trap.Trap: error while executing at wasm backtrace:
+    0: 0x57fbec - <unknown>!<wasm function 6688>
+    1: 0x582661 - <unknown>!<wasm function 7282>
+    2: 0x33719c - <unknown>!<wasm function 603>
+    3: 0x57f91f - <unknown>!obfuscate
+
+Caused by:
+    wasm trap: wasm `unreachable` instruction executed
+make: *** [Makefile:36: run-large] Error 1
 ```
+
+Apparently the module instance somehow becomes corrupt when the input is greater than 64KB. There is no information on
+the internet to explain this behavior but we can extrapolate from the small and medium sample size that performance is
+likely to scale poorly with larger samples.
 
 ### Further investigation
 
-- Does this work for multi-megabyte js files?
-- Does this work for js using es6 features?
+- [ ] Can we make this work for javascript larger than 64KB?
+- [ ] Does this work for js using es6 features?
