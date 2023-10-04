@@ -156,3 +156,31 @@ This turns out to be just as fast as using a single instance because the module 
 
 - [ ] Can we make this work for javascript larger than 64KB?
 - [ ] Does this work for js using es6 features?
+
+## Javy
+
+So we tried javy and performance is not good. 10x slower than node.
+
+```
+▶ time cat input/chart.js | python3.10 obfuscate.javy.py > output/chart.js
+
+real    0m11.172s
+user    0m11.942s
+sys     0m0.121s
+
+▶ time python3.10 obfuscate-node.py chart.js
+Node internal call:   1.314s
+Python node syscall:  1.437s
+
+real    0m1.477s
+user    0m1.965s
+sys     0m0.132s
+```
+
+This might not even have anything to do with the webassembly and could just be a python problem.
+
+https://github.com/bytecodealliance/wasmtime-py/issues/96
+
+> Not much attention has been paid to performance in the bindings in this repository, so this isn't altogether
+unsurprising. I have never personally written high-performance Python and consequently probably made a ton of mistakes
+when writing these bindings.
