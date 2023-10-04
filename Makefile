@@ -44,3 +44,20 @@ run-huge:
 	@python3.10 obfuscate-uni.py obfuscate.bundle.js
 	@# python3.10 obfuscate-crash.py obfuscate.bundle.js
 	@python3.10 obfuscate-multi.py obfuscate.bundle.js
+
+javy-build:
+	@./node_modules/.bin/esbuild obfuscate.javy.js --outfile=obfuscate.javy.bundle.js --format=esm --bundle --minify
+	@./javy-x86_64-linux-v1.1.2 compile obfuscate.javy.bundle.js -o obfuscate.javy.wasm
+	@./javy-x86_64-linux-v1.1.2 compile -d obfuscate.javy.bundle.js -o obfuscate.d.javy.wasm
+	@./javy-x86_64-linux-v1.1.2 emit-provider -o provider.d.javy.wasm
+
+javy-run:
+	@echo ""
+	@echo "Running tiny sample: 2KB"
+	@cat input/socket.js | python3.10 obfuscate.javy.py > output/socket.js
+	@echo "Running small sample: 17KB"
+	@cat input/react-router.min.js | python3.10 obfuscate.javy.py > output/react-router.min.js
+	@echo "Running medium sample: 55KB"
+	@cat input/fullpage.min.js | python3.10 obfuscate.javy.py > output/fullpage.min.js
+	@echo "Running large sample: 400KB"
+	@cat input/chart.js | python3.10 obfuscate.javy.py > output/chart.js
