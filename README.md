@@ -185,6 +185,6 @@ https://github.com/bytecodealliance/wasmtime-py/issues/96
 unsurprising. I have never personally written high-performance Python and consequently probably made a ton of mistakes
 when writing these bindings.
 
-More likely it is not a pythong problem and is actually a QuickJS problem.
+More likely it is not a python problem and is actually a QuickJS problem.
 
 https://bellard.org/quickjs/bench.html
