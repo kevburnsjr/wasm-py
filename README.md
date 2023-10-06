@@ -184,3 +184,7 @@ https://github.com/bytecodealliance/wasmtime-py/issues/96
 > Not much attention has been paid to performance in the bindings in this repository, so this isn't altogether
 unsurprising. I have never personally written high-performance Python and consequently probably made a ton of mistakes
 when writing these bindings.
+
+More likely it is not a pythong problem and is actually a QuickJS problem.
+
+https://bellard.org/quickjs/bench.html
