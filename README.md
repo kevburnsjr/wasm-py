@@ -1,9 +1,17 @@
 # WASM demo: Javascript in Python 
 
-Trying to compile a javascript obfuscator to a web assembly module as a component using a Wasm Interface Type (WIT),
-then run from Python.
+POC to run a javascript obfuscator as a web assembly module in [wasmtime from Python](https://github.com/bytecodealliance/wasmtime-py#wasmtime-py) using [Wasm Interface Types (WIT)](https://github.com/WebAssembly/interface-types/blob/main/proposals/interface-types/Explainer.md) and/or [WASI](https://wasi.dev/).
 
-## How to Run
+# Conclusion
+
+Steps to run are below but the results are here:
+
+- WIT [reactor](https://wasmcloud.com/blog/webassembly-patterns-command-reactor-library#the-reactor-pattern) modules compiled with [ComponentizeJS](https://github.com/bytecodealliance/componentize-js#componentizejs) ([SpiderMonkey](https://spidermonkey.dev/)) are slow and become crashy with inputs larger than 64 kb
+- WASI [command](https://wasmcloud.com/blog/webassembly-patterns-command-reactor-library#the-command-pattern) modules compiled with [Javy](https://github.com/bytecodealliance/javy#javy) ([QuickJS](https://bellard.org/quickjs/)) work but are equally slow.
+
+Both of these libraries compile javascript to webassembly by using an embedded javascript engine ([SpiderMonkey](https://spidermonkey.dev/) and [QuickJS](https://bellard.org/quickjs/)). These embedded javascript engines will always exhibit performamce an order of magnitude slower than a JIT compiled Javascript runtime like node's v8. See [QuickJS Benchmark](https://bellard.org/quickjs/bench.html) for context.
+
+# How to Run
 
 Install esbuild, componentize-js and jco
 
